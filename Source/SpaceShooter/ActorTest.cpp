@@ -2,8 +2,10 @@
 
 
 #include "ActorTest.h"
-
-
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
 
 // Sets default values
 AActorTest::AActorTest()
@@ -25,7 +27,19 @@ void AActorTest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	APawn* jugador { UGameplayStatics::GetPlayerPawn(GetWorld(),0) };
 	
+	
+	if(!IsValid(jugador)) return;
+
+	FVector posicion { jugador->GetActorLocation()};
+	
+	MostrarPosicion(posicion);
 
 }
 
+
+void AActorTest::MostrarPosicion(FVector posicion)
+{
+	UKismetSystemLibrary::PrintString(GetWorld(),UKismetStringLibrary::Conv_VectorToString(posicion));
+}
