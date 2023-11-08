@@ -3,6 +3,8 @@
 
 #include "ActorTest.h"
 
+
+
 // Sets default values
 AActorTest::AActorTest()
 {
@@ -22,6 +24,8 @@ void AActorTest::BeginPlay()
 void AActorTest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	
 
 }
 
