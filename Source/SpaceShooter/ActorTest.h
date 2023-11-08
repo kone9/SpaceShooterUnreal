@@ -24,4 +24,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
     void MostrarPosicion(FVector posicion);
+
+
+	UPROPERTY(EditAnywhere)
+	FVector prueba{ FVector::UpVector};
+
+	UPROPERTY(EditAnywhere)
+	UAudioComponent* newCOmpoenent{nullptr};
+
+
 };

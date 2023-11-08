@@ -6,13 +6,20 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
+#include "Components/AudioComponent.h"
+
 
 // Sets default values
 AActorTest::AActorTest()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	newCOmpoenent = CreateDefaultSubobject<UAudioComponent>(TEXT("ComponentCPPAriel"));
+	newCOmpoenent->SetupAttachment(GetRootComponent());
 
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -34,7 +41,7 @@ void AActorTest::Tick(float DeltaTime)
 
 	FVector posicion { jugador->GetActorLocation()};
 	
-	MostrarPosicion(posicion);
+	MostrarPosicion(prueba);
 
 }
 
