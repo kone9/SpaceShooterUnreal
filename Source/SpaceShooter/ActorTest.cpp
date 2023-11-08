@@ -15,11 +15,13 @@ AActorTest::AActorTest()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	newCOmpoenent = CreateDefaultSubobject<UAudioComponent>(TEXT("ComponentCPPAriel"));
-	newCOmpoenent->SetupAttachment(GetRootComponent());
 
-	
-	
+	newRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootARiel"));
+	RootComponent = newRoot;
+
+	newCOmpoenent = CreateDefaultSubobject<UAudioComponent>(TEXT("ComponentCPPAriel"));
+	newCOmpoenent->SetupAttachment(newRoot);
+
 }
 
 // Called when the game starts or when spawned
@@ -41,7 +43,7 @@ void AActorTest::Tick(float DeltaTime)
 
 	FVector posicion { jugador->GetActorLocation()};
 	
-	MostrarPosicion(prueba);
+	MostrarPosicion(posicion);
 
 }
 

@@ -33,4 +33,8 @@ public:
 	UAudioComponent* newCOmpoenent{nullptr};
 
 
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* newRoot{nullptr};
+
+
 };
