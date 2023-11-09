@@ -20,7 +20,8 @@ void AEnemySpawner::BeginPlay()
 	Super::BeginPlay();
 
 	save_arrows_transform();
-	Spawner();
+	SpawnerEvent();
+	//Spawner();
 
 }
 
@@ -29,7 +30,7 @@ void AEnemySpawner::BeginPlay()
 
 void AEnemySpawner::Spawner()
 {
-	UKismetSystemLibrary::K2_SetTimer(GetWorld(),TEXT("SpawnerEvent"),TimeDelaySpawn,true);//timer constante para instanciar
+	UKismetSystemLibrary::K2_SetTimer(GetWorld(),TEXT("SpawnerEvent"),time_delay_spawnCPP,true);//timer constante para instanciar
 }
 
 
@@ -39,6 +40,19 @@ void AEnemySpawner::SpawnerEvent()
 
 	TSubclassOf<AActor> nuevaInstancia { RandomEnemy() };
 	//GetWorld()->SpawnActor<AActor*>( refAsteroid);
+
+	FActorSpawnParameters spawn_params{};
+	spawn_params.Owner = nullptr; // Specify owner actor for this new actor if you need one.
+	spawn_params.Instigator = nullptr; // Specify instigator pawn for this new actor if you need one
+	spawn_params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	const FTransform new_actor_transform = pointsCPP[0]; // Identity Matrix if you need the default transformation.
+
+	UKismetSystemLibrary::PrintString(GetWorld(),"INSTANCIANDO ENEMIGO CPP");
+
+	if(!IsValid(nuevaInstancia)) return;
+	// Spawn Actor return a Pointer to new Actor
+	GetWorld()->SpawnActor<AActor>(nuevaInstancia, new_actor_transform, spawn_params);
 
 }
 
@@ -54,7 +68,7 @@ void AEnemySpawner::save_arrows_transform()
 		for(int i = 0; i< Children.Num(); i++)
 		{
 			if( !IsValid(Children[i])) return;
-			points.Push( Children[i]->GetComponentTransform());
+			pointsCPP.Push( Children[i]->GetComponentTransform());
 		}
 	}
 
@@ -64,13 +78,13 @@ void AEnemySpawner::save_arrows_transform()
 // Called every frame
 TSubclassOf<AActor> AEnemySpawner::RandomEnemy()
 {
-	if( UKismetMathLibrary::RandomFloatInRange(0,1) < Probabilidad_Meteor)
+	if( UKismetMathLibrary::RandomFloatInRange(0,1) < probabilidad_meteorCPP)
 	{
-		return refAsteroid;
+		return refAsteroidCPP;
 	}
 	else
 	{
-		return refEnemy;
+		return refEnemyCPP;
 	}
 }
 

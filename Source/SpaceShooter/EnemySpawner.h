@@ -25,19 +25,19 @@ public:
 
 
 public:
-	TArray<FTransform> points;
+	TArray<FTransform> pointsCPP;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> refEnemy;
+	TSubclassOf<AActor> refEnemyCPP;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> refAsteroid;
+	TSubclassOf<AActor> refAsteroidCPP;
 
 	UPROPERTY(EditAnywhere)
-	float Probabilidad_Meteor{0.1f};
+	float probabilidad_meteorCPP{0.1f};
 
 	UPROPERTY(EditAnywhere)
-	float TimeDelaySpawn{1};
+	float time_delay_spawnCPP{1.0f};
 
 
 
