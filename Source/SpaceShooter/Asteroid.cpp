@@ -2,6 +2,12 @@
 
 
 #include "Asteroid.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "Engine/World.h"
+#include "Components/SphereComponent.h"
+
 
 // Sets default values
 AAsteroid::AAsteroid()
@@ -15,7 +21,13 @@ AAsteroid::AAsteroid()
 void AAsteroid::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	ref_Collision = Cast<USphereComponent>( GetComponentByClass(USphereComponent::StaticClass()) );
+	if( !IsValid(ref_Collision)) return;
+	ref_Collision->OnComponentBeginOverlap.AddDynamic(this, &AAsteroid::OnComponentBeginOverlap);	
+
+
+	RandomDirection();
 }
 
 // Called every frame
@@ -25,4 +37,36 @@ void AAsteroid::Tick(float DeltaTime)
 
 	
 }
+void AAsteroid::RandomDirection()
+{
+
+	if(UKismetMathLibrary::RandomFloatInRange(0,1) < 0.5f)
+	{
+		dir_CPP = -1;
+	}
+	else
+	{
+		dir_CPP = 1;
+	}
+
+}
+
+
+
+void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+
+	if( !IsValid(GetWorld())) return;
+	
+	health_CPP -=1;
+
+	if(health_CPP < 1)
+	{
+		UKismetSystemLibrary::PrintString(GetWorld(), "SE DESTRUYE EL ASTEROIDE");
+		Destroy();
+	}
+
+}
+
+
 

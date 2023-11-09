@@ -33,7 +33,7 @@ void AEnemySpawner::SpawnerTimer()
 
 void AEnemySpawner::SpawnerEnemy()
 {
-	UKismetSystemLibrary::PrintString(GetWorld(),"INSTANCIANDO ENEMIGO CPP");
+	// UKismetSystemLibrary::PrintString(GetWorld(),"INSTANCIANDO ENEMIGO CPP");
 	if(!IsValid(GetWorld())) return;
 
 
@@ -93,6 +93,8 @@ TSubclassOf<AActor> AEnemySpawner::RandomEnemy()
 void AEnemySpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	
 	
 }
 
