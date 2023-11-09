@@ -21,6 +21,10 @@ void AEnemySpawner::BeginPlay()
 
 	save_arrows_transform();
 	SpawnerEvent();
+	FTimerHandle TimerHandle; // Declaración de la estructura de TimerHandle
+
+	UKismetSystemLibrary::K2_SetTimer(this,TEXT("SpawnerEvent"),time_delay_spawnCPP,true);//timer constante para instanciar
+
 	//Spawner();
 
 }
