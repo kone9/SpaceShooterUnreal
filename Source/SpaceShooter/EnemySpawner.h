@@ -23,4 +23,35 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+public:
+	TArray<FTransform> points;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> refEnemy;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> refAsteroid;
+
+	UPROPERTY(EditAnywhere)
+	float Probabilidad_Meteor{0.1f};
+
+	UPROPERTY(EditAnywhere)
+	float TimeDelaySpawn{1};
+
+
+
+
+private:
+    void Spawner();
+
+    void SpawnerEvent();
+
+    void save_arrows_transform();
+
+    TSubclassOf<AActor> RandomEnemy();
+
+
+
+
 };
