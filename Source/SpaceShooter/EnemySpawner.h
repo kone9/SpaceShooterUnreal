@@ -40,12 +40,12 @@ public:
 	float time_delay_spawnCPP{1.0f};
 
 
-
+	UFUNCTION()
+    void SpawnerEnemy();
 
 private:
-    void Spawner();
-
-    void SpawnerEvent();
+    void SpawnerTimer();
+	
 
     void save_arrows_transform();
 

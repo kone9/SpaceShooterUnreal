@@ -20,44 +20,38 @@ void AEnemySpawner::BeginPlay()
 	Super::BeginPlay();
 
 	save_arrows_transform();
-	SpawnerEvent();
-	FTimerHandle TimerHandle; // Declaración de la estructura de TimerHandle
-
-	UKismetSystemLibrary::K2_SetTimer(this,TEXT("SpawnerEvent"),time_delay_spawnCPP,true);//timer constante para instanciar
-
-	//Spawner();
+	SpawnerTimer();
 
 }
 
 
-
-
-void AEnemySpawner::Spawner()
+void AEnemySpawner::SpawnerTimer()
 {
-	UKismetSystemLibrary::K2_SetTimer(GetWorld(),TEXT("SpawnerEvent"),time_delay_spawnCPP,true);//timer constante para instanciar
+	UKismetSystemLibrary::K2_SetTimer(this,TEXT("SpawnerEnemy"),time_delay_spawnCPP,true);//timer constante para instanciar
 }
 
 
-void AEnemySpawner::SpawnerEvent()
+void AEnemySpawner::SpawnerEnemy()
 {
+	UKismetSystemLibrary::PrintString(GetWorld(),"INSTANCIANDO ENEMIGO CPP");
 	if(!IsValid(GetWorld())) return;
 
-	TSubclassOf<AActor> nuevaInstancia { RandomEnemy() };
-	//GetWorld()->SpawnActor<AActor*>( refAsteroid);
 
-	FActorSpawnParameters spawn_params{};
-	spawn_params.Owner = nullptr; // Specify owner actor for this new actor if you need one.
-	spawn_params.Instigator = nullptr; // Specify instigator pawn for this new actor if you need one
-	spawn_params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	if (pointsCPP.Num() > 0) // instancia en punto aleatorio
+	{
+		TSubclassOf<AActor> nuevaInstancia { RandomEnemy() };
 
-	const FTransform new_actor_transform = pointsCPP[0]; // Identity Matrix if you need the default transformation.
+		FActorSpawnParameters spawn_params{};
+		spawn_params.Owner = nullptr; // Specify owner actor for this new actor if you need one.
+		spawn_params.Instigator = nullptr; // Specify instigator pawn for this new actor if you need one
+		spawn_params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	UKismetSystemLibrary::PrintString(GetWorld(),"INSTANCIANDO ENEMIGO CPP");
+		int32 RandomTransformIndex = UKismetMathLibrary::RandomIntegerInRange(0, pointsCPP.Num() - 1);
 
-	if(!IsValid(nuevaInstancia)) return;
-	// Spawn Actor return a Pointer to new Actor
-	GetWorld()->SpawnActor<AActor>(nuevaInstancia, new_actor_transform, spawn_params);
+		if (!IsValid(nuevaInstancia)) return;
 
+		GetWorld()->SpawnActor<AActor>(nuevaInstancia, pointsCPP[RandomTransformIndex], spawn_params);
+	}
 }
 
 
