@@ -64,7 +64,8 @@ void AAsteroid::MoveClamp_Y(float DeltaTime)
 	FVector new_position { GetActorLocation()};
 
 	new_position.X = GetActorLocation().X - (SPEED_CPP.X * DeltaTime);
-	new_position.Z = GetActorLocation().Z  - (dir_CPP * SPEED_CPP.Y * DeltaTime ) ; 
+	new_position.Z = GetActorLocation().Z
+	  - (dir_CPP * SPEED_CPP.Y * DeltaTime ) ; 
 
 	SetActorLocation(new_position);
 	AddActorWorldRotation(FRotator(0.5f,0,0));
