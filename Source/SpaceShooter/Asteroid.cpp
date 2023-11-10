@@ -7,6 +7,10 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "Engine/World.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
+
+
+
 
 
 // Sets default values
@@ -14,6 +18,7 @@ AAsteroid::AAsteroid()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 
 }
 
@@ -50,7 +55,7 @@ void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent
 	if(health_CPP < 1)
 	{
 		UKismetSystemLibrary::PrintString(GetWorld(), "SE DESTRUYE EL ASTEROIDE");
-		//|Destroy();
+		DestroyMeteor();
 	}
 
 }
@@ -99,7 +104,11 @@ void AAsteroid::RandomDirection()
 
 }
 
-
+void AAsteroid::DestroyMeteor()
+{
+	//UGameplayStatics::PlaySound2D(GetWorld(),)
+	Destroy();
+}
 
 
 

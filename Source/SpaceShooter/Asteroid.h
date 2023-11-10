@@ -46,7 +46,7 @@ public:
 
 	void MoveClamp_Y(float DeltaTime);
 
-	
+	void DestroyMeteor();
 
 
 
