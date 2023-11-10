@@ -11,8 +11,6 @@
 
 
 
-
-
 // Sets default values
 AAsteroid::AAsteroid()
 {
@@ -48,15 +46,21 @@ void AAsteroid::Tick(float DeltaTime)
 void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 
-	if( !IsValid(GetWorld())) return;
-	
-	health_CPP -=1;
-
 	if(health_CPP < 1)
 	{
 		UKismetSystemLibrary::PrintString(GetWorld(), "SE DESTRUYE EL ASTEROIDE");
+		if( !IsValid(explosionSound)) return;
+		UGameplayStatics::PlaySound2D(GetWorld(),explosionSound);
 		DestroyMeteor();
 	}
+	else
+	{
+		health_CPP -=1;
+		dir_CPP = dir_CPP * -1;
+		if( !IsValid(hitSound)) return;
+		UGameplayStatics::PlaySound2D(GetWorld(),hitSound);
+	}
+
 
 }
 
@@ -107,6 +111,7 @@ void AAsteroid::RandomDirection()
 void AAsteroid::DestroyMeteor()
 {
 	//UGameplayStatics::PlaySound2D(GetWorld(),)
+	
 	Destroy();
 }
 

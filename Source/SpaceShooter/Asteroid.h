@@ -25,13 +25,19 @@ public:
 	float WINDOW_SIZE_Y_CPP {1000};
 
 	UPROPERTY(EditAnywhere)
-	FVector2D SPEED_CPP {FVector2D(700,1200)};
+	FVector2D SPEED_CPP {FVector2D(800,1200)};
 
 	UPROPERTY(EditAnywhere)
 	int health_CPP {2};
 
 	UPROPERTY(EditAnywhere)
 	int dir_CPP {-1};
+
+	UPROPERTY(EditAnywhere)
+    class USoundBase* hitSound{nullptr};
+
+	UPROPERTY(EditAnywhere)
+    class USoundBase* explosionSound{nullptr};
 
 
 public:	
