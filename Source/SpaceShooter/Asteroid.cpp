@@ -35,8 +35,55 @@ void AAsteroid::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	MoveClamp_Y(DeltaTime);
 	
 }
+
+
+void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+
+	if( !IsValid(GetWorld())) return;
+	
+	health_CPP -=1;
+
+	if(health_CPP < 1)
+	{
+		UKismetSystemLibrary::PrintString(GetWorld(), "SE DESTRUYE EL ASTEROIDE");
+		//|Destroy();
+	}
+
+}
+
+
+
+
+void AAsteroid::MoveClamp_Y(float DeltaTime)
+{
+
+	FVector new_position { GetActorLocation()};
+
+	new_position.X = GetActorLocation().X - (SPEED_CPP.X * DeltaTime);
+	new_position.Z = GetActorLocation().Z  - (dir_CPP * SPEED_CPP.Y * DeltaTime ) ; 
+
+	SetActorLocation(new_position);
+	AddActorWorldRotation(FRotator(0.5f,0,0));
+
+
+	if(GetActorLocation().Z > WINDOW_SIZE_Y_CPP + 850)
+	{
+		dir_CPP = 1;
+	}
+
+	if(GetActorLocation().Z < (WINDOW_SIZE_Y_CPP * -1) )
+	{
+		dir_CPP = -1;
+	}
+
+
+}
+
+
 void AAsteroid::RandomDirection()
 {
 
@@ -53,20 +100,6 @@ void AAsteroid::RandomDirection()
 
 
 
-void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-{
-
-	if( !IsValid(GetWorld())) return;
-	
-	health_CPP -=1;
-
-	if(health_CPP < 1)
-	{
-		UKismetSystemLibrary::PrintString(GetWorld(), "SE DESTRUYE EL ASTEROIDE");
-		Destroy();
-	}
-
-}
 
 
 
