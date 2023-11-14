@@ -113,7 +113,7 @@ void AAsteroid::CalculeInvertClangPositionZ()
 
 void AAsteroid::CalculeChangeDirectionOverlap(UPrimitiveComponent* OverlappedComponent)
 {
-	if(OverlappedComponent->GetOwner()->IsPendingKillEnabled())//si el actor esta enable
+	if(OverlappedComponent->GetOwner()->IsPendingKillEnabled())//si el actor esta aun en memoria enable
 	{	
 		if(!OverlappedComponent->ComponentHasTag("ball"))
 		{
