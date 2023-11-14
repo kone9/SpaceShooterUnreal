@@ -54,16 +54,19 @@ public:
 	UFUNCTION()
     void OnComponentBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
+private:
+	void MoveClamp_Z(float DeltaTime);
 
-	void MoveClamp_Y(float DeltaTime);
-
+	void MoveAsteroid(float DeltaTime);
+	
 	void DestroyMeteor();
 
 	void DescountLives();
 
+	void CalculeInvertClangPositionZ();
+
 private:
 	class USphereComponent* ref_Collision{nullptr};
-
 
 
 

@@ -11,8 +11,6 @@
 #include "NiagaraFunctionLibrary.h" // Include the Niagara Function Library header
 
 
-
-
 // Sets default values
 AAsteroid::AAsteroid()
 {
@@ -40,12 +38,9 @@ void AAsteroid::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	MoveClamp_Y(DeltaTime);
+	MoveClamp_Z(DeltaTime);
 
-	
-	
 }
-
 
 void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
@@ -59,38 +54,13 @@ void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent
 		DestroyMeteor();
 	}
 
-	
 }
 
-
-
-
-void AAsteroid::MoveClamp_Y(float DeltaTime)
+void AAsteroid::MoveClamp_Z(float DeltaTime)
 {
-
-	FVector new_position { GetActorLocation()};
-
-	new_position.X = GetActorLocation().X - (SPEED_CPP.X * DeltaTime);
-	new_position.Z = GetActorLocation().Z
-	  - (dir_CPP * SPEED_CPP.Y * DeltaTime ) ; 
-
-	SetActorLocation(new_position);
-	AddActorWorldRotation(FRotator(0.5f,0,0));
-
-
-	if(GetActorLocation().Z > WINDOW_SIZE_Y_CPP + 850)
-	{
-		dir_CPP = 1;
-	}
-
-	if(GetActorLocation().Z < (WINDOW_SIZE_Y_CPP * -1) )
-	{
-		dir_CPP = -1;
-	}
-
-
+	MoveAsteroid(DeltaTime);
+	CalculeInvertClangPositionZ();
 }
-
 
 void AAsteroid::RandomDirection()
 {
@@ -126,6 +96,27 @@ void AAsteroid::DescountLives()
 	UGameplayStatics::PlaySound2D(GetWorld(),hitSound);
 }
 
+void AAsteroid::CalculeInvertClangPositionZ()
+{
+	if(GetActorLocation().Z > WINDOW_SIZE_Y_CPP + 850)
+	{
+		dir_CPP = 1;
+	}
 
+	if(GetActorLocation().Z < (WINDOW_SIZE_Y_CPP * -1) )
+	{
+		dir_CPP = -1;
+	}
+}
 
+void AAsteroid::MoveAsteroid(float DeltaTime)
+{
+	FVector new_position { GetActorLocation()};
 
+	new_position.X = GetActorLocation().X - (SPEED_CPP.X * DeltaTime);
+	new_position.Z = GetActorLocation().Z
+	  - (dir_CPP * SPEED_CPP.Y * DeltaTime ) ; 
+
+	SetActorLocation(new_position);
+	AddActorWorldRotation(FRotator(0.5f,0,0));
+}
