@@ -39,6 +39,8 @@ void AAsteroid::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	MoveClamp_Y(DeltaTime);
+
+	
 	
 }
 
@@ -61,7 +63,7 @@ void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent
 		UGameplayStatics::PlaySound2D(GetWorld(),hitSound);
 	}
 
-
+	
 }
 
 
