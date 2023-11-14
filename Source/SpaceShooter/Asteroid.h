@@ -45,6 +45,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UNiagaraSystem *ExplosionFire{nullptr};
 
+	UFUNCTION(BlueprintCallable)
+	static bool ActorEstaPendienteDeserDestruido(AActor* actorAverificar);
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
