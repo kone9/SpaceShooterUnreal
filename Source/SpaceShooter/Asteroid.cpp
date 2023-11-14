@@ -8,6 +8,8 @@
 #include "Engine/World.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h" // Include the Niagara Function Library header
+
 
 
 
@@ -48,19 +50,13 @@ void AAsteroid::Tick(float DeltaTime)
 void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 
-	if(health_CPP < 1)
+	if(health_CPP > 1)
 	{
-		UKismetSystemLibrary::PrintString(GetWorld(), "SE DESTRUYE EL ASTEROIDE");
-		if( !IsValid(explosionSound)) return;
-		UGameplayStatics::PlaySound2D(GetWorld(),explosionSound);
-		DestroyMeteor();
+		DescountLives();
 	}
 	else
 	{
-		health_CPP -=1;
-		dir_CPP = dir_CPP * -1;
-		if( !IsValid(hitSound)) return;
-		UGameplayStatics::PlaySound2D(GetWorld(),hitSound);
+		DestroyMeteor();
 	}
 
 	
@@ -112,9 +108,22 @@ void AAsteroid::RandomDirection()
 
 void AAsteroid::DestroyMeteor()
 {
-	//UGameplayStatics::PlaySound2D(GetWorld(),)
-	
+	if( !IsValid(explosionSound)) return;
+	if( !IsValid(ExplosionMeteor)) return;
+	if( !IsValid(ExplosionFire)) return;
+	if( !IsValid(GetWorld())) return;
+	UGameplayStatics::PlaySound2D(GetWorld(),explosionSound);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(),ExplosionMeteor,GetActorLocation(),GetActorRotation(),GetActorScale());
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(),ExplosionFire,GetActorLocation(),GetActorRotation(),GetActorScale());
 	Destroy();
+}
+
+void AAsteroid::DescountLives()
+{
+	health_CPP -=1;
+	dir_CPP = dir_CPP * -1;
+	if( !IsValid(hitSound)) return;
+	UGameplayStatics::PlaySound2D(GetWorld(),hitSound);
 }
 
 

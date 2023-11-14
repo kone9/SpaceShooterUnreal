@@ -39,6 +39,11 @@ public:
 	UPROPERTY(EditAnywhere)
     class USoundBase* explosionSound{nullptr};
 
+	UPROPERTY(EditAnywhere)
+	class UNiagaraSystem *ExplosionMeteor{nullptr};
+
+	UPROPERTY(EditAnywhere)
+	class UNiagaraSystem *ExplosionFire{nullptr};
 
 public:	
 	// Called every frame
@@ -54,9 +59,12 @@ public:
 
 	void DestroyMeteor();
 
-
+	void DescountLives();
 
 private:
 	class USphereComponent* ref_Collision{nullptr};
+
+
+
 
 };
