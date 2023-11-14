@@ -120,7 +120,6 @@ void AAsteroid::CalculeChangeDirectionOverlap(UPrimitiveComponent* OverlappedCom
 			dir_CPP = dir_CPP * -1;
 		}
 	}
-	
 }
 
 void AAsteroid::MoveAsteroid(float DeltaTime)
