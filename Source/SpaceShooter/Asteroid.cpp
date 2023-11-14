@@ -48,6 +48,7 @@ void AAsteroid::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent
 	if(health_CPP > 1)
 	{
 		DescountLives();
+		CalculeChangeDirectionOverlap(OtherComp);
 	}
 	else
 	{
@@ -90,9 +91,10 @@ void AAsteroid::DestroyMeteor()
 
 void AAsteroid::DescountLives()
 {
-	health_CPP -=1;
-	dir_CPP = dir_CPP * -1;
+	
+	//
 	if( !IsValid(hitSound)) return;
+	health_CPP -=1;
 	UGameplayStatics::PlaySound2D(GetWorld(),hitSound);
 }
 
@@ -107,6 +109,18 @@ void AAsteroid::CalculeInvertClangPositionZ()
 	{
 		dir_CPP = -1;
 	}
+}
+
+void AAsteroid::CalculeChangeDirectionOverlap(UPrimitiveComponent* OverlappedComponent)
+{
+	if(OverlappedComponent->GetOwner()->IsPendingKillEnabled())//si el actor esta enable
+	{	
+		if(!OverlappedComponent->ComponentHasTag("ball"))
+		{
+			dir_CPP = dir_CPP * -1;
+		}
+	}
+	
 }
 
 void AAsteroid::MoveAsteroid(float DeltaTime)

@@ -65,6 +65,8 @@ private:
 
 	void CalculeInvertClangPositionZ();
 
+	void CalculeChangeDirectionOverlap(UPrimitiveComponent* OverlappedComponent);
+
 private:
 	class USphereComponent* ref_Collision{nullptr};
 
