@@ -57,16 +57,16 @@ void AEnemySpawner::SpawnerEnemy()
 
 void AEnemySpawner::save_arrows_transform()
 {
-	TArray<USceneComponent*> Children;
+	TArray<USceneComponent*> ChildrenArrowsPositionsSpawns;
 
-	GetRootComponent()->GetChildrenComponents(false,Children);
+	GetRootComponent()->GetChildrenComponents(false,ChildrenArrowsPositionsSpawns);
 
-	if(Children.Num() > 0)
+	if(ChildrenArrowsPositionsSpawns.Num() > 0)
 	{
-		for(int i = 0; i< Children.Num(); i++)
+		for(int i = 0; i< ChildrenArrowsPositionsSpawns.Num(); i++)
 		{
-			if( !IsValid(Children[i])) return;
-			pointsCPP.Push( Children[i]->GetComponentTransform());
+			if( !IsValid(ChildrenArrowsPositionsSpawns[i])) return;
+			pointsCPP.Push( ChildrenArrowsPositionsSpawns[i]->GetComponentTransform());
 		}
 	}
 
