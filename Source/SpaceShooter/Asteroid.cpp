@@ -134,7 +134,6 @@ void AAsteroid::MoveAsteroid(float DeltaTime)
 	AddActorWorldRotation(FRotator(0.5f,0,0));
 }
 
-
 bool AAsteroid::ActorEstaPendienteDeserDestruido(AActor* actorAverificar)
 {
 	if(actorAverificar->IsPendingKillEnabled())
